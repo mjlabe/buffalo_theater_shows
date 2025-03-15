@@ -173,6 +173,9 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
+# OS
+.DS_Store
+
 # Playwright
 node_modules/
 /test-results/

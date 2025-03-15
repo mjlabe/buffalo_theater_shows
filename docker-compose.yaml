@@ -1,16 +1,16 @@
 services:
-  web:
-    image: buffalo_theater_shows:latest
-    restart: unless-stopped
-    security_opt:
-      - "seccomp=./seccomp_profile.json"
-    volumes:
-      - ./src:/src
-    ports:
-      - "5666:5666"
-    depends_on:
-      - ollama
-      - redis
+#  web:
+#    image: buffalo_theater_shows:latest
+#    restart: unless-stopped
+#    security_opt:
+#      - "seccomp=./seccomp_profile.json"
+#    volumes:
+#      - ./src:/src
+#    ports:
+#      - "5666:5666"
+#    depends_on:
+#      - ollama
+#      - redis
 
   ollama:
     image: ollama/ollama

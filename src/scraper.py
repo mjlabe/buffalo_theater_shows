@@ -1,34 +1,29 @@
-import json
 import os
 from pathlib import Path
 
 from scrapegraphai.graphs import SmartScraperGraph
 
-from src.settings import settings
-
-
-settings_file_path = os.environ.get("DS9_SETTINGS_MODULE", Path("src", "settings", "default"))
-
 
 class Scraper:
-    @staticmethod
-    def scrape(self):
+    def __init__(self, config):
+        self.config = config
+
+    def scrape(self, source, prompt) -> dict:
+        smart_scraper_graph = SmartScraperGraph(
+                    prompt=prompt,
+                    source=source,
+                    config=self.config
+                )
+        return smart_scraper_graph.run()
+
+    def aggregate(self, sources: list):
         scrape_result = []
-        for site in settings().get("sites"):
+        for source in sources:
             # Create the SmartScraperGraph instance
             smart_scraper_graph = SmartScraperGraph(
-                prompt=site.get("prompt"),
-                source=site.get("url"),
-                config=settings().get("graph_config")
+                prompt=source.get("scrape_prompt"),
+                source=source.get("scrape_url"),
+                config=self.config
             )
             scrape_result.append(smart_scraper_graph.run())
-        return result
-
-
-if __name__ == '__main__':
-    # Run the pipeline
-    scrape_urls = settings().get("scrape_urls")
-    scraper = Scraper()
-    result = scraper.scrape(scrape_urls)
-
-    print(json.dumps(result, indent=4))
+        return scrape_result

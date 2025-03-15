@@ -7,7 +7,7 @@ COPY ./requirements.txt /requirements.txt
 
 RUN pip install -r /requirements.txt -v
 
-COPY ./src /src
+COPY ds9 /src
 
 EXPOSE 8000
 
