@@ -12,16 +12,21 @@ graph_config = {
     "headless": True,
 }
 
-# Create the SmartScraperGraph instance
-smart_scraper_graph = SmartScraperGraph(
-    prompt="Extract the show names, dates, times, and urls to the shows pictures for all the shows coming up at this theater",
-    source="https://historicpalaceinc.thundertix.com",
-    config=graph_config
-)
+
+def theater_scraper(url):
+    # Create the SmartScraperGraph instance
+    smart_scraper_graph = SmartScraperGraph(
+        prompt="Extract the show names, dates, times, and urls to the shows pictures for all the shows coming up at this theater",
+        source=url,
+        config=graph_config
+    )
+    result = smart_scraper_graph.run()
+    return result
 
 
 if __name__ == '__main__':
     # Run the pipeline
-    result = smart_scraper_graph.run()
+    url = ""
+    result = theater_scraper(url):
 
     print(json.dumps(result, indent=4))
