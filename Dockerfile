@@ -11,4 +11,4 @@ COPY ./src /src
 
 EXPOSE 8000
 
-CMD ["python", "/src/main.py"]
+CMD ["streamlit", "run", "app.py"]
