@@ -35,9 +35,35 @@ def normalize_array_lengths(data_dict, fill_value=None):
     return normalized
 
 
-for site in settings.sites:
-    shows = scraper.scrape(source=site["scrape_url"], prompt=site["scrape_prompt"])
-    st.image(site["theater_logo_url"], width=300)
-    st.write(f"[{site["theater_name"]}](%s)" % site['theater_url'])
-    df = pd.DataFrame(normalize_array_lengths(shows.get("content")))
-    st.write(df)
+@st.cache_data(ttl=60*60*24)    # ttl 24 hrs
+def get_shows(site):
+    shows = "Error"
+    try:
+        shows = scraper.scrape(source=site["scrape_url"], prompt=site["scrape_prompt"])
+        if len(shows["content"]["show_names"]) < 1:
+            st.cache_data.clear()
+        return shows
+    except Exception as error:
+        print(error, shows)
+        raise
+
+
+def main():
+    ts = []
+    for site in settings.sites:
+        theater_link = f"[{site["theater_name"]}](%s)" % site['theater_url']
+        st.image(site["theater_logo_url"], width=300)
+        st.write(theater_link)
+        try:
+            shows = get_shows(site)
+            print(shows)
+            ts.append(shows)
+            df = pd.DataFrame(normalize_array_lengths(shows.get("content")))
+            st.write(df)
+        except Exception as e:
+            st.write(
+                f"Hmmm... We can't seem to get the shows right now. Check out {theater_link} to see what they have."
+            )
+
+
+main()
