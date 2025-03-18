@@ -8,16 +8,5 @@ services:
       - ./src:/src
     ports:
       - "8501:8501"
-#    depends_on:
-#      - ollama
-
-#  ollama:
-#    image: ollama/ollama
-#    ports:
-#      - "11434:11434"
-#    volumes:
-#      - ollama_volume:/root/.ollama
-#    restart: unless-stopped
-
-volumes:
-  ollama_volume:
+    env_file:
+      - .env

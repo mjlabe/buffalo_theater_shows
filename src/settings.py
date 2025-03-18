@@ -1,15 +1,5 @@
 import os
 
-# # Define the default configuration for the scraping pipeline
-# graph_config = {
-#     "llm": {
-#         "model": "ollama/llama3.2",
-#         "model_tokens": 8192
-#     },
-#     "verbose": True,
-#     "headless": True,
-#     "base_url": "localhost:11434", # set ollama docker URL
-# }
 
 graph_config = {
     "llm": {
@@ -18,7 +8,6 @@ graph_config = {
     },
     "verbose": True,
     "headless": True,
-    "base_url": "localhost:11434", # set ollama docker URL
 }
 
 sites = [

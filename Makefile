@@ -36,6 +36,10 @@ environment ?= latest
 lock:
 	uv pip freeze > requirements.txt
 
+.PHONY: runlocal
+runlocal:
+	python -m streamlit run ./src/main.py
+
 .PHONY: run
 run:
 	docker compose -f docker-compose.yaml stop
@@ -56,3 +60,7 @@ lint:
 .PHONY: test
 test:
 	docker compose run --rm $(SERVICE) python manage.py test
+
+.PHONY: black
+black:
+	black src

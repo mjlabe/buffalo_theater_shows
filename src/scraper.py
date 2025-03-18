@@ -9,10 +9,8 @@ class Scraper:
 
     def scrape(self, source, prompt) -> dict:
         smart_scraper_graph = SmartScraperGraph(
-                    prompt=prompt,
-                    source=source,
-                    config=self.config
-                )
+            prompt=prompt, source=source, config=self.config
+        )
         result = smart_scraper_graph.run()
         if type(result) == str:
             result = json.loads(result)
@@ -25,7 +23,7 @@ class Scraper:
             smart_scraper_graph = SmartScraperGraph(
                 prompt=source.get("scrape_prompt"),
                 source=source.get("scrape_url"),
-                config=self.config
+                config=self.config,
             )
             scrape_result.append(smart_scraper_graph.run())
         return scrape_result
