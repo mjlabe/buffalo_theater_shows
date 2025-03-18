@@ -1,5 +1,15 @@
 import os
+from streamlit import set_page_config
 
+
+set_page_config(
+    page_title="Buffalo Theater Aggregator",
+    page_icon="🎭",
+    layout="wide",
+    menu_items={
+        "Report a bug": "https://github.com/mjlabe/buffalo_theater_shows/issues",
+    },
+)
 
 graph_config = {
     "llm": {
