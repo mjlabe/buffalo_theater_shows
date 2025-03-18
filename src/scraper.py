@@ -1,5 +1,4 @@
-import os
-from pathlib import Path
+import json
 
 from scrapegraphai.graphs import SmartScraperGraph
 
@@ -14,7 +13,10 @@ class Scraper:
                     source=source,
                     config=self.config
                 )
-        return smart_scraper_graph.run()
+        result = smart_scraper_graph.run()
+        if type(result) == str:
+            result = json.loads(result)
+        return result
 
     def aggregate(self, sources: list):
         scrape_result = []

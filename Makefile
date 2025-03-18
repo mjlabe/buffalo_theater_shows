@@ -12,6 +12,7 @@ shell:
 .PHONY: build
 build:
 	docker build \
+	--progress=plain \
 	-t $(CONTAINER_NAME) .
 
 .PHONY: build-no-cache
@@ -30,6 +31,10 @@ environment ?= latest
 
 ### HELPER TARGETS ============================================================
 ### These are better for quickly running things and greatly reduce typing.
+
+.PHONY: lock
+lock:
+	uv pip freeze > requirements.txt
 
 .PHONY: run
 run:

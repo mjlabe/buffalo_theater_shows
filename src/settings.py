@@ -1,8 +1,20 @@
-# Define the default configuration for the scraping pipeline
+import os
+
+# # Define the default configuration for the scraping pipeline
+# graph_config = {
+#     "llm": {
+#         "model": "ollama/llama3.2",
+#         "model_tokens": 8192
+#     },
+#     "verbose": True,
+#     "headless": True,
+#     "base_url": "localhost:11434", # set ollama docker URL
+# }
+
 graph_config = {
     "llm": {
-        "model": "ollama/llama3.2",
-        "model_tokens": 8192
+        "api_key": os.environ.get("OPENAI_API_KEY"),
+        "model": "openai/gpt-4o-mini",
     },
     "verbose": True,
     "headless": True,
@@ -45,18 +57,18 @@ sites = [
         "scrape_url": "https://www.sheas.org/buffalo-theatre/",
         "scrape_prompt": "Extract the show names, performance date range and description for all the shows coming up at this theater",
     },
-    # {
-    #     "theater_name": "Shea's 710",
-    #     "theater_url": "https://www.sheas.org/710-theatre/",
-    #     "theater_logo_url": "https://www.sheas.org/wp-content/uploads/2019/03/sheas-building-icon-sketches-sheas-710-PORTRAIT-SIZE.jpg",
-    #     "scrape_url": "https://www.sheas.org/710-theatre/",
-    #     "scrape_prompt": "Extract the show names, performance date range and description for all the shows coming up at this theater",
-    # },
-    # {
-    #     "theater_name": "Shea's Smith",
-    #     "theater_url": "https://www.sheas.org/smith-theatre/",
-    #     "theater_logo_url": "https://www.sheas.org/wp-content/uploads/2019/03/sheas-building-icon-sketches-sheas-smith-PORTRAIT-SIZE.jpg",
-    #     "scrape_url": "https://www.sheas.org/smith-theatre/",
-    #     "scrape_prompt": "Extract the show names, performance date range and description for all the shows coming up at this theater",
-    # },
+    {
+        "theater_name": "Shea's 710",
+        "theater_url": "https://www.sheas.org/710-theatre/",
+        "theater_logo_url": "https://www.sheas.org/wp-content/uploads/2019/03/sheas-building-icon-sketches-sheas-710-PORTRAIT-SIZE.jpg",
+        "scrape_url": "https://www.sheas.org/710-theatre/",
+        "scrape_prompt": "Extract the show names, performance date range and description for all the shows coming up at this theater",
+    },
+    {
+        "theater_name": "Shea's Smith",
+        "theater_url": "https://www.sheas.org/smith-theatre/",
+        "theater_logo_url": "https://www.sheas.org/wp-content/uploads/2019/03/sheas-building-icon-sketches-sheas-smith-PORTRAIT-SIZE.jpg",
+        "scrape_url": "https://www.sheas.org/smith-theatre/",
+        "scrape_prompt": "Extract the show names, performance date range and description for all the shows coming up at this theater",
+    },
 ]
