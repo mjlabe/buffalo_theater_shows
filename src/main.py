@@ -1,3 +1,4 @@
+from time import sleep
 from typing import List
 
 import streamlit as st
@@ -35,6 +36,7 @@ def main():
             df = pd.DataFrame(shows)
             df.columns = ['Show', 'Date(s)', 'Description', ]
             st.write(df.set_index(df.columns[0]))
+            sleep(20)   # avoid rate limit
         except Exception as e:
             print("ERROR", e)
             st.write(
