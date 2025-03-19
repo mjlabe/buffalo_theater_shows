@@ -18,7 +18,8 @@ def get_shows(site) -> List[dict]:
     try:
         shows = scraper.scrape(source=site["scrape_url"], prompt=site["scrape_prompt"])
         if len(shows["content"]) < 1:
-            st.cache_data.clear()
+            # st.cache_data.clear()
+            pass
         return shows["content"]
     except Exception as error:
         print(error, shows)
