@@ -24,5 +24,5 @@ graph_config = {
 }
 
 
-with open(os.environ.get("sites_path", "./src/sites.json")) as f:
+with open(os.environ.get("sites_path", "/src/sites.json")) as f:
     sites = json.load(f).get("sites", [])

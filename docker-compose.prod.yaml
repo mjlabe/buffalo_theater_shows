@@ -1,0 +1,12 @@
+services:
+  web:
+    image: mjlabe/buffalo_theater_shows:latest
+    restart: unless-stopped
+    security_opt:
+      - "seccomp=./seccomp_profile.json"
+    volumes:
+      - ./src:/src
+    ports:
+      - "8501:8501"
+    env_file:
+      - .env
