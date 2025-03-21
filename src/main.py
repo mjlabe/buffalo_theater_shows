@@ -9,12 +9,14 @@ import settings
 from scraper import Scraper
 
 
+scraper = Scraper(
+    config=settings.graph_config
+)
+
+
 @st.cache_data(ttl=60*60*24)    # ttl 24 hrs
 def get_shows(source, prompt) -> List[dict]:
     shows = "Error"
-    scraper = Scraper(
-        config=settings.graph_config
-    )
     try:
         shows = scraper.scrape(source=source, prompt=prompt)
         if len(shows["content"]) < 1:
