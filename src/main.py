@@ -34,6 +34,8 @@ def main():
         st.image(site["theater_logo_url"], width=150)
         st.write(theater_link)
         try:
+            print(site["scrape_url"])
+            print(site["scrape_prompt"])
             shows = get_shows(source=site["scrape_url"], prompt=site["scrape_prompt"])
             print(shows)
             df = pd.DataFrame(shows)
