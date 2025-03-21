@@ -1,6 +1,6 @@
 services:
   web:
-    image: mjlabe/buffalo_theater_shows:latest
+    image: mjlabe/buffalo_theater_shows:main
     restart: unless-stopped
     security_opt:
       - "seccomp=./seccomp_profile.json"
