@@ -9,14 +9,14 @@ import settings
 from scraper import Scraper
 
 
-@st.cache_resource(ttl=60*60*24)    # ttl 24 hrs
-def get_shows(site) -> List[dict]:
+@st.cache_data(ttl=60*60*24)    # ttl 24 hrs
+def get_shows(source, prompt) -> List[dict]:
     shows = "Error"
     scraper = Scraper(
         config=settings.graph_config
     )
     try:
-        shows = scraper.scrape(source=site["scrape_url"], prompt=site["scrape_prompt"])
+        shows = scraper.scrape(source=source, prompt=prompt)
         if len(shows["content"]) < 1:
             # st.cache_data.clear()
             pass
@@ -32,7 +32,7 @@ def main():
         st.image(site["theater_logo_url"], width=150)
         st.write(theater_link)
         try:
-            shows = get_shows(site)
+            shows = get_shows(source=site["scrape_url"], prompt=site["scrape_prompt"])
             print(shows)
             df = pd.DataFrame(shows)
             df.columns = ['Show', 'Date(s)', 'Description', ]
