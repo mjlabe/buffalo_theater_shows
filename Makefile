@@ -45,6 +45,11 @@ run:
 	docker compose -f docker-compose.yaml stop
 	docker compose -f docker-compose.yaml up
 
+.PHONY: runprod
+runprod:
+	docker compose -f docker-compose.prod.yaml stop
+	docker compose -f docker-compose.prod.yaml up
+
 .PHONY: up
 up: build
 	docker compose -f docker-compose.yaml up -d
