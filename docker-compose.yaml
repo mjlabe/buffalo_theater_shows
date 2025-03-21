@@ -2,7 +2,7 @@ services:
   web:
     image: buffalo_theater_shows:latest
     restart: unless-stopped
-    command: streamlit run main.py --server.enableCORS=false --server.enableWebsocketCompression=false
+    command: streamlit run main.py
     security_opt:
       - "seccomp=./seccomp_profile.json"
     volumes:
