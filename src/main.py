@@ -9,7 +9,7 @@ import settings
 from scraper import Scraper
 
 
-@st.cache_data(ttl=60*60*24)    # ttl 24 hrs
+@st.cache_resource(ttl=60*60*24)    # ttl 24 hrs
 def get_shows(site) -> List[dict]:
     shows = "Error"
     scraper = Scraper(
