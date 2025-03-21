@@ -13,12 +13,12 @@ scraper = Scraper(
     config=settings.graph_config
 )
 
-
 @st.cache_data(ttl=60*60*24)    # ttl 24 hrs
 def get_shows(source, prompt) -> List[dict]:
     shows = "Error"
     try:
         shows = scraper.scrape(source=source, prompt=prompt)
+        sleep(20)   # avoid rate limit
         if len(shows["content"]) < 1:
             # st.cache_data.clear()
             pass
@@ -41,7 +41,6 @@ def main():
             df = pd.DataFrame(shows)
             df.columns = ['Show', 'Date(s)', 'Description', ]
             st.write(df.set_index(df.columns[0]))
-            sleep(20)   # avoid rate limit
         except Exception as e:
             print("ERROR", e)
             st.write(
