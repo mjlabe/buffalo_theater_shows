@@ -1,3 +1,4 @@
+import logging
 from time import sleep
 from typing import List
 
@@ -9,23 +10,21 @@ import settings
 from scraper import Scraper
 
 
+logger = logging.getLogger(__name__)
+
 scraper = Scraper(
     config=settings.graph_config
 )
 
 @st.cache_data(ttl=60*60*24)    # ttl 24 hrs
 def get_shows(source, prompt) -> List[dict]:
-    shows = "Error"
-    try:
-        shows = scraper.scrape(source=source, prompt=prompt)
-        sleep(20)   # avoid rate limit
-        if len(shows["content"]) < 1:
-            # st.cache_data.clear()
-            pass
-        return shows["content"]
-    except Exception as error:
-        print(error, shows)
-        raise
+    sleep(10)   # avoid rate limit
+    logger.info("Fetching theater listings from %s", source)
+    shows = scraper.scrape(source=source, prompt=prompt)
+    if not shows:
+        # st.cache_data.clear()
+        raise ValueError("Scraper returned no upcoming shows")
+    return shows
 
 
 def main():
@@ -34,15 +33,16 @@ def main():
         st.image(site["theater_logo_url"], width=150)
         st.write(theater_link)
         try:
-            print(site["scrape_url"])
-            print(site["scrape_prompt"])
             shows = get_shows(source=site["scrape_url"], prompt=site["scrape_prompt"])
-            print(shows)
-            df = pd.DataFrame(shows)
-            df.columns = ['Show', 'Date(s)', 'Description', ]
-            st.write(df.set_index(df.columns[0]))
-        except Exception as e:
-            print("ERROR", e)
+            df = pd.DataFrame(shows, columns=['Show', 'Date(s)', 'Description'])
+            df["Description"] = df["Description"].fillna("")
+            st.dataframe(df.set_index('Show'), use_container_width=True)
+        except Exception:
+            logger.exception(
+                "Failed to load listings for theater %s from %s",
+                site["theater_name"],
+                site["scrape_url"],
+            )
             st.write(
                 f"Hmmm... We can't seem to get the shows right now. Check out {theater_link} to see what they have."
             )

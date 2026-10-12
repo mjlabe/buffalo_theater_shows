@@ -1,5 +1,4 @@
-FROM python:3.12
-FROM mcr.microsoft.com/playwright/python:v1.50.0-noble
+FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1
 
@@ -7,7 +6,7 @@ WORKDIR /src
 
 COPY ./requirements.txt /requirements.txt
 
-RUN pip install -r /requirements.txt -v
+RUN pip install -r /requirements.txt -v && playwright install --with-deps chromium
 
 COPY src /src
 

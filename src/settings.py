@@ -16,7 +16,7 @@ set_page_config(
 graph_config = {
     "llm": {
         "api_key": os.environ.get("OPENAI_API_KEY"),
-        "model": "openai/gpt-4o-mini",
+        "model": "openai/gpt-6-luna",
         "max_tokens": 4096
     },
     "verbose": True,
